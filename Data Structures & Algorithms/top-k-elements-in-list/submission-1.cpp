@@ -1,22 +1,15 @@
 class Solution {
 public:
-    vector<int> topKFrequent(vector<int>& nums, int k) {
-        using pii = pair<int,int>;
-        unordered_map<int,int> mp;
-        for(auto& it : nums){
-            mp[it]++;
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> mp;
+        for(auto& it : strs){
+            string sortedS = it;
+            sort(sortedS.begin(),sortedS.end());
+            mp[sortedS].push_back(it);
         }
-        priority_queue<pii,vector<pii>,greater<pii>> pq;
-        for(auto it : mp){
-            pq.push({it.second,it.first});
-            if(pq.size() > k){
-                pq.pop();
-            }
-        }
-        vector<int> res;
-        while(k--){
-            res.push_back(pq.top().second);
-            pq.pop();
+        vector<vector<string>> res;
+        for(auto& it : mp){
+            res.push_back(it.second);
         }
         return res;
     }
